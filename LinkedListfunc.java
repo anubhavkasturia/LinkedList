@@ -10,8 +10,7 @@ public class LinkedListfunc{
     private int size;
 
 
-
-public void display(){
+    public void display(){
     Node temp=this.head;
     while(temp!=null){
         System.out.println(temp.data);
@@ -23,9 +22,17 @@ public void addFirst(int data){
     node.data=data;//add
    
     node.next=this.head;
-    head=node;
+    this.head=node;
     this.size++;
 }
+// Node node = new Node(); //Create
+// node.data = data; // Adding data
+// //Link
+// node.next = this.head;
+// //Update summary 
+// this.head = node;
+// this.size++;
+// }
 
 
 public void addLast(int data){
@@ -51,7 +58,7 @@ public void addLast(int data){
    
    
    public int getAt(int i)throws Exception{
-    if(i>=this.size && i<0){
+    if(i>=this.size || i<0){
         throw new Exception("Index out of bounds");
 
     }else if(this.size==0){
@@ -66,7 +73,7 @@ public void addLast(int data){
 
    }
    public Node getNodeAt(int i)throws Exception{
-    if(i>=this.size && i<0){
+    if(i>=this.size || i<0){
         throw new Exception("Index out of bounds");
 
     }else if(this.size==0){
@@ -84,14 +91,23 @@ public void addLast(int data){
    
 
 
-    public void removeFirst(){
-        Node after=head.next;
-        this.head=after;
+    public void removeFirst() throws Exception{
+        if(this.size==0){
+            throw new Exception("LinkedList is Empty");
+        }
+        this.head=head.next;
+        this.size--;
+
+        
     }
     public void removeLast()throws Exception{
-     Node before=getNodeAt(this.size-2);
-     before.next=null;
-     
+        if(this.size==0){
+            throw new Exception("LinkedList is Empty");
+        }
+        Node newtail=getNodeAt(this.size-2);
+        this.tail=newtail;
+        tail.next=null;
+        this.size--;
     }
 
     public void addAt(int i,int data)throws Exception{
@@ -117,7 +133,7 @@ public void addLast(int data){
     public void removeAt(int i)throws Exception{
         if(i==0){
             removeFirst();
-        }else if(i==this.size){
+        }else if(i==this.size-1){
             removeLast();
         }
         else if(i>=this.size && i<0){
@@ -133,4 +149,35 @@ public void addLast(int data){
         this.size--;
 
     }
+    public void reverseDisplay(){
+        rd(this.head);
     }
+        private static void rd(Node temp) {
+            if(temp.next==null){
+                return;
+            }
+            rd(temp.next);
+            System.out.println(temp.data);
+        }
+    
+    public void reverseData()throws Exception{
+        int left=0;
+        int right=this.size-1;
+        
+
+        if(left < right){
+            
+            Node leftNode=getNodeAt(left);
+            Node rightNode=getNodeAt(right);
+            
+            int temp=leftNode.data;
+            leftNode.data=rightNode.data;
+            rightNode.data=temp;
+            left++;
+            right--;
+        }
+        
+        
+        
+    }
+    }    
